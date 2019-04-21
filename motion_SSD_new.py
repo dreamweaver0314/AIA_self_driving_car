@@ -19,9 +19,7 @@ class MotDec():
         self.cnt = 0
         self.mode = 'user'
     def run(self, img_arr=None, psn_x=None, psn_y=None):
-#        self.frame = img_arr
-
-#        print ('It is run thread')
+        self.frame = img_arr
         self.x_center = psn_x
         self.y_center = psn_y
         if (self.x_center -320) >= 0:
@@ -40,15 +38,37 @@ class MotDec():
     def update(self, img_arr=None, psn_x=None, psn_y=None):
 #        self.frame = img_arr
 #        self.angle = int((str_ang - 320)/32)*0.2
+#        self.x_center = psn_x
+#        self.y_center = psn_y
+#        print ('Update_Cor: ({:.1f},{:.1f})'.format(self.x_center, self.y_center))
+#        return self.frame
         self.x_center = psn_x
         self.y_center = psn_y
-        print ('Update_Cor: ({:.1f},{:.1f})'.format(self.x_center, self.y_center))
-        return self.frame
+        if (self.x_center -320) >= 0:
+            self.ssd_angle = min(int((self.x_center - 320)/32)*0.2 , 1)
+        else:
+            self.ssd_angle = max(-1, int((self.x_center - 320)/32)*0.2)
+        
+        self.cnt += 1
+        if self.cnt == 5:
+            print ('Update_Cor: ({:.1f},{:.1f})'.format(self.x_center, self.y_center))
+            print ('Steering: {:.1f}'.format(self.ssd_angle))
+            self.cnt = 0
     def run_threaded(self, img_arr=None, psn_x=None, psn_y=None):
+#        self.x_center = psn_x
+#        self.y_center = psn_y
+#        print ('Thread_Cor: ({:.1f},{:.1f})'.format(self.x_center, self.y_center))
+#        return self.frame
         self.x_center = psn_x
         self.y_center = psn_y
-        print ('Thread_Cor: ({:.1f},{:.1f})'.format(self.x_center, self.y_center))
-        return self.frame
-#    def _run_threaded(self, img_arr=None):
-#        self.img_arr = img_arr
+        if (self.x_center -320) >= 0:
+            self.ssd_angle = min(int((self.x_center - 320)/32)*0.2 , 1)
+        else:
+            self.ssd_angle = max(-1, int((self.x_center - 320)/32)*0.2)
+        
+        self.cnt += 1
+        if self.cnt == 5:
+            print ('Thread_Cor: ({:.1f},{:.1f})'.format(self.x_center, self.y_center))
+            print ('Steering: {:.1f}'.format(self.ssd_angle))
+            self.cnt = 0
 #        return self.frame
