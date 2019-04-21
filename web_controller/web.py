@@ -103,6 +103,7 @@ class LocalWebController(tornado.web.Application):
         self.cnt += 1
         if self.cnt == 5:
             print ('Web_thread_steering: {:.1f}'.format(self.angle))
+            print (self.img_arr)
             self.cnt = 0
 #        self.angle = str_ang
         return self.angle, self.throttle, self.mode, self.recording
