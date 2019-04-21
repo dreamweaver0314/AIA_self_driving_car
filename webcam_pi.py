@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+'''this webcam_pi.py is trying to run PiCamera with MobileNet SSD on Raspberry Pi 3 B+'''
 
 from picamera.array import PiRGBArray
 from picamera import PiCamera
@@ -36,6 +37,7 @@ graph = mvnc.Graph('graph1')
 input_fifo, output_fifo = graph.allocate_with_fifos(device, graph_file)
 
 #image preprocessing
+# normalize the pixel color: 0~255
 def preprocess(src):
     img = cv2.resize(src, input_size)
     img = img - 127.5
